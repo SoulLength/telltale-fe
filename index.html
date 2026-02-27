@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telltale Translator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <section class="translator" data-side="up">
+            <div class="content">
+                <div class="controls">
+                    <select class="lang" tabindex="-1">
+                        <option value="en-US" data-hint="Write or speak...">English</option>
+                        <option value="it-IT" data-hint="Scrivi o parla...">Italian</option>
+                        <option value="tr-TR" data-hint="Konuşun veya yazın...">Turkish</option>
+                        <option value="ja-JP" data-hint="入力または発話...">Japanese</option>
+                    </select>
+                    <div class="controls-right">
+                        <button tabindex="-1" class="send-btn" title="Send"><img src="res/send.svg" alt="Send"></button>
+                        <button tabindex="-1" class="mic-btn"><img src="res/mic.svg" alt="Microphone"></button>
+                    </div>
+                </div>
+                <textarea placeholder="Write or speak..." class="text-display"></textarea>
+            </div>
+        </section>
+
+        <div class="center-float">
+            <button class="flip-btn" tabindex="-1">
+                <span class="arrow"><img src="res/arrow.svg" alt="Arrow"></span>
+                <span class="arrow top"><img src="res/arrow.svg" alt="Arrow"></span>
+            </button>
+        </div>
+
+        <section class="translator" data-side="down">
+            <div class="content">
+                <div class="controls">
+                    <select class="lang" tabindex="-1">
+                        <option value="it-IT" data-hint="Scrivi o parla...">Italian</option>
+                        <option value="tr-TR" data-hint="Konuşun veya yazın...">Turkish</option>
+                        <option value="en-US" data-hint="Write or speak...">English</option>
+                        <option value="ja-JP" data-hint="入力または発話...">Japanese</option>
+                    </select>
+                    <div class="controls-right">
+                        <button tabindex="-1" class="send-btn" title="Send"><img src="res/send.svg" alt="Send"></button>
+                        <button tabindex="-1" class="mic-btn"><img src="res/mic.svg" alt="Microphone"></button>
+                    </div>
+                </div>
+                <textarea placeholder="Scrivi o parla..." class="text-display"></textarea>
+            </div>
+        </section>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

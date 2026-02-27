@@ -1,0 +1,241 @@
+:root {
+    --green: #50af44;
+    --slate-green: #259e15;
+    --red: #e5383b;
+    --slate-red: #9e1517;
+    --bright-snow: #f8f9faff;
+    --platinum: #e9ecefff;
+    --alabaster-grey: hsl(210, 14%, 90%);
+    --pale-slate: #ced4daff;
+    --pale-slate-2: #adb5bdff;
+    --slate-grey: #6d767e;
+    --iron-grey: #484f56;
+    --gunmetal: #353b41;
+    --carbon-black-light: #1b1f22;
+    --carbon-black: #171a1c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background: var(--carbon-black);
+    min-height: 100dvh;
+}
+
+img, svg {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+button:hover     { 
+    background: var(--pale-slate-2); 
+}
+
+button:active { 
+    transform: scale(.90); 
+}
+
+.app-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+/* ── Translator panels ── */
+
+.translator {
+    flex: none;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    transition: background 0.3s;
+    overflow: hidden;
+}
+
+.translator[data-side="up"]   { 
+    background: var(--carbon-black-light); 
+    border-bottom: 1px solid var(--slate-grey);
+}
+.translator[data-side="down"] { 
+    background: var(--carbon-black); 
+    border-top: 1px solid var(--slate-grey);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+    transition: opacity 200ms ease;
+    overflow: hidden;
+}
+
+.content.faded { opacity: 0; }
+
+/* ── Controls row ── */
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.controls-right {
+    display: flex;
+    align-items: center;
+}
+
+select.lang {
+    padding: 8px;
+    border-radius: 8px;
+    background: var(--gunmetal);
+    color: white;
+    border: 1px solid var(--iron-grey);
+    margin-left: 2px;
+    outline: none;
+}
+
+/* ── Send button ── */
+
+.send-btn {
+    width: 10dvh;
+    height: 10dvh;
+    border-radius: 50%;
+    border: none;
+    background: var(--alabaster-grey);
+    border: 1px solid var(--slate-grey);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease, transform 0.15s ease;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 5px;
+}
+.send-btn img {
+    width: 60%;
+    height: 60%;
+}
+@keyframes pulseGreen {
+    0%   { box-shadow: 0 0 0 0 var(--slate-green); }
+    70%  { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+.send-btn.sending {
+    transform: scale(0.90); 
+    background: var(--green);
+    border: 1px solid var(--slate-green);
+    animation: pulseGreen 1.5s infinite;
+}
+.send-btn:active.sending { 
+    transform: scale(0.85); 
+}
+
+/* ── Mic button ── */
+
+.mic-btn {
+    width: 10dvh;
+    height: 10dvh;
+    border-radius: 50%;
+    border: none;
+    background: var(--alabaster-grey);
+    border: 1px solid var(--slate-grey);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease, transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 5px;
+}
+.mic-btn img {
+    width: 60%;
+    height: 60%;
+}
+@keyframes pulseRed {
+    0%   { box-shadow: 0 0 0 0 var(--slate-red); }
+    70%  { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+.mic-btn.listening {
+    transform: scale(0.90); 
+    background: var(--red);
+    border: 1px solid var(--slate-red);
+    animation: pulseRed 1.5s infinite;
+}
+.mic-btn:active.listening { 
+    transform: scale(0.85); 
+}
+
+/* ── Textarea ── */
+
+.text-display {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    resize: none;
+    outline: none;
+    /* keep text clear of the centred flip button */
+    padding-right: 120px;
+}
+
+/* ── Centre flip button ── */
+
+.center-float {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.flip-btn {
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px;
+    border-radius: 10px;
+    background: var(--alabaster-grey);
+    border: 1px solid var(--slate-grey);
+    cursor: pointer;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.flip-btn:active {
+    transform: scale(.95);
+}
+
+.arrow {
+    width: 26px;
+    height: 26px;
+    transition: transform 400ms ease;
+}
+.arrow img {
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Misc ── */
+
+.flipped { transform: rotate(180deg); }

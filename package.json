@@ -1,0 +1,19 @@
+{
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && npx vite build",
+    "start": "npx vite",
+    "docker-build": "npm run build && dotenv -e .env -- cross-env-shell docker build -t $TAG .",
+    "docker-build-pi4": "npm run build && dotenv -e .env -- cross-env-shell docker buildx build --platform linux/arm64/v8 --provenance=false -t $TAG .",
+    "docker-push": "dotenv -e .env -- cross-env-shell docker push $TAG"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "dotenv-cli": "^11.0.0",
+    "rimraf": "^6.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}
