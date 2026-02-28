@@ -35,7 +35,7 @@ export class DomManager {
         return [this.up, this.down].filter(s => s !== side);
     }
 
-    public static updateTextAreaPlaceholder(side: TranslatorSide): void {
+    public static resetTextAreaPlaceholder(side: TranslatorSide): void {
         side.textArea.placeholder = side.languageSelect.selectedOptions[0].dataset.hint!;
     }
 
@@ -54,7 +54,7 @@ export class DomManager {
             const savedLang = localStorage.getItem(`lang-${side.id}`);
             if (savedLang) {
                 side.languageSelect.value = savedLang;
-                this.updateTextAreaPlaceholder(side);
+                this.resetTextAreaPlaceholder(side);
             }
         }
     }

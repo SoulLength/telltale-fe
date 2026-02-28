@@ -70,19 +70,19 @@ function speak(base64: string): void {
 [DomManager.up.microphoneButton, DomManager.down.microphoneButton].forEach((btn) => {
     btn.addEventListener("click", async (event) => {
         const element = event.currentTarget as HTMLButtonElement;
-        const language = DomManager.getSide(element).languageSelect.value;
+        const language = DomManager.getSide(element).languageSelect;
         const textArea = DomManager.getSide(element).textArea;
         if (!SttManager.isListening()) {
             SttManager.startListening()
             element.classList.add("listening");
-            textArea.placeholder = "Listening...";
+            textArea.placeholder = language.selectedOptions[0].dataset.listening!;
         }
         else {
-            const transcript = await SttManager.stopListening(language);
+            const transcript = await SttManager.stopListening(language.value);
             element.classList.remove("listening");
             textArea.value = transcript ?? "";
             DomManager.updateButton(DomManager.getSide(element));
-            DomManager.updateTextAreaPlaceholder(DomManager.getSide(element));
+            DomManager.resetTextAreaPlaceholder(DomManager.getSide(element));
         }
     });
 });
@@ -91,7 +91,7 @@ function speak(base64: string): void {
 [DomManager.up.languageSelect, DomManager.down.languageSelect].forEach((select) => {
     select.addEventListener("change", (event) => {
         const element = event.target as HTMLSelectElement;
-        DomManager.updateTextAreaPlaceholder(DomManager.getSide(element));
+        DomManager.resetTextAreaPlaceholder(DomManager.getSide(element));
         DomManager.saveSelectedLanguage(element);
     });
 });
