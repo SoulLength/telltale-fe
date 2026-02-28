@@ -61,30 +61,29 @@ function speak(base64: string): void {
 
 [DomManager.up.sendButton, DomManager.down.sendButton].forEach((btn) => {
     btn.addEventListener("click", (event) => {
-        btn.setPointerCapture(event.pointerId);
         const element = event.currentTarget as HTMLButtonElement;
         element.classList.add("sending");
-        // handleTranslation(DomManager.getSide(element));
+        handleTranslation(DomManager.getSide(element));
     });
 });
 
 [DomManager.up.microphoneButton, DomManager.down.microphoneButton].forEach((btn) => {
-    btn.addEventListener("click", (event) => {
+    btn.addEventListener("click", async (event) => {
         const element = event.currentTarget as HTMLButtonElement;
         const language = DomManager.getSide(element).languageSelect.value;
-        const sttUpdate = (text: string) => {
-            DomManager.getSide(element).textArea.value = text;
-        }
-        const sttEnd = () => {
-            element.classList.remove("listening");
-            DomManager.updateButton(DomManager.getSide(element));
-        }
+        const textArea = DomManager.getSide(element).textArea;
         if (!SttManager.isListening()) {
-            if (SttManager.startListening(language, sttUpdate, sttEnd)) {
-                element.classList.add("listening");
-            }
+            SttManager.startListening()
+            element.classList.add("listening");
+            textArea.placeholder = "Listening...";
         }
-        else SttManager.stopListening();
+        else {
+            const transcript = await SttManager.stopListening(language);
+            element.classList.remove("listening");
+            textArea.value = transcript ?? "";
+            DomManager.updateButton(DomManager.getSide(element));
+            DomManager.updateTextAreaPlaceholder(DomManager.getSide(element));
+        }
     });
 });
 

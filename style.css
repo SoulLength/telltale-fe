@@ -36,8 +36,10 @@ img, svg {
     pointer-events: none;
 }
 
-button:hover     { 
-    background: var(--pale-slate-2); 
+@media (hover: hover) and (pointer: fine) {
+    button:hover {
+        background: var(--pale-slate-2);
+    }
 }
 
 button:active { 
@@ -132,14 +134,13 @@ select.lang {
 }
 @keyframes pulseGreen {
     0%   { box-shadow: 0 0 0 0 var(--slate-green); }
-    70%  { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    100%  { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
 }
 .send-btn.sending {
     transform: scale(0.90); 
     background: var(--green);
     border: 1px solid var(--slate-green);
-    animation: pulseGreen 1.5s infinite;
+    animation: pulseGreen 1.5s infinite ease-in;
 }
 .send-btn:active.sending { 
     transform: scale(0.85); 
@@ -168,15 +169,14 @@ select.lang {
     height: 60%;
 }
 @keyframes pulseRed {
-    0%   { box-shadow: 0 0 0 0 var(--slate-red); }
-    70%  { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+    0%   { box-shadow: 0 0 0 0px var(--slate-red); }
+    100%  { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
 }
 .mic-btn.listening {
     transform: scale(0.90); 
     background: var(--red);
     border: 1px solid var(--slate-red);
-    animation: pulseRed 1.5s infinite;
+    animation: pulseRed 1.5s infinite ease-in;
 }
 .mic-btn:active.listening { 
     transform: scale(0.85); 
