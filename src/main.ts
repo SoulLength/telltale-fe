@@ -1,5 +1,6 @@
 import { DomManager, TranslatorSide } from "./dom-manager.js";
 import { SttManager } from "./stt-manager.js";
+import { recordingStartAudio } from "./utils.js";
 
 const API_URL = import.meta.env.VITE_TELLTALE_API_URL;
 
@@ -81,6 +82,7 @@ function speak(base64: string): void {
         const textArea = DomManager.getSide(element).textArea;
         if (!SttManager.isListening()) {
             SttManager.startListening()
+            recordingStartAudio.play();
             element.classList.add("listening");
             textArea.placeholder = language.selectedOptions[0].dataset.listening!;
         }
