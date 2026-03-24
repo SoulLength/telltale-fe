@@ -1,6 +1,6 @@
 import { DomManager, TranslatorSide } from "./dom-manager.js";
 import { SttManager } from "./stt-manager.js";
-import { recordingStartAudio } from "./utils.js";
+import { audioContext, gainNode, recordingStartAudio } from "./utils.js";
 
 const API_URL = import.meta.env.VITE_TELLTALE_API_URL;
 
@@ -50,13 +50,8 @@ async function handleTranslation(fromSide: TranslatorSide): Promise<void> {
 
 // --- Audio ---
 function speak(base64: string): void {
-    const ctx = new AudioContext();
-    const gainNode = ctx.createGain();
-    gainNode.gain.value = 4.0;
-    gainNode.connect(ctx.destination);
-
     const audio = new Audio(`data:audio/mp3;base64,${base64}`);
-    ctx.createMediaElementSource(audio).connect(gainNode);
+    audioContext.createMediaElementSource(audio).connect(gainNode);
     audio.play();
 }
 
@@ -68,10 +63,12 @@ function speak(base64: string): void {
 });
 
 [DomManager.up.sendButton, DomManager.down.sendButton].forEach((btn) => {
-    btn.addEventListener("click", (event) => {
+    btn.addEventListener("click", async (event) => {
         const element = event.currentTarget as HTMLButtonElement;
         element.classList.add("sending");
-        handleTranslation(DomManager.getSide(element));
+        element.disabled = true;
+        await handleTranslation(DomManager.getSide(element));
+        element.disabled = false;
     });
 });
 
